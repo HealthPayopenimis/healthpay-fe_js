@@ -1,3 +1,9 @@
+# HealthPay Payer System — Frontend Assembly (base: openIMIS release/26.04)
+
+**Built on [openIMIS](https://openimis.org), a Digital Public Good.** AGPL-3.0 — modified sources public at https://github.com/HealthPayopenimis.
+
+---
+
 # openIMIS frontend assembly
 
 ## running
