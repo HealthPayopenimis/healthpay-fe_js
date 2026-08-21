@@ -33,7 +33,7 @@ USER node
 ENV GENERATE_SOURCEMAP=true
 ENV NODE_ENV=production
 RUN npm config set prefix /home/node/.npm-global
-RUN npm install -g npm@latest
+RUN npm install -g npm@10
 
 FROM base AS build-stage
 RUN npm run load-config
