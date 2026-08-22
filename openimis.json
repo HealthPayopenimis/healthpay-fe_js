@@ -40,7 +40,7 @@
     },
     {
       "name": "InsureeModule",
-      "npm": "@openimis/fe-insuree@github:HealthPayopenimis/healthpay-fe-insuree_js#c81f4ae15468be921a966a26103fc82070b85759"
+      "npm": "@openimis/fe-insuree@github:HealthPayopenimis/healthpay-fe-insuree_js#f0afe82e2f749550c946aa82a8a5b1a31ee81489"
     },
     {
       "name": "MedicalModule",
@@ -124,7 +124,7 @@
     },
     {
       "name": "LanguageArModule",
-      "npm": "@healthpay/fe-language_ar@github:HealthPayopenimis/healthpay-fe-language_ar_js#b4410c0acf2324ab91d8014f7d610647c74df3be"
+      "npm": "@healthpay/fe-language_ar@github:HealthPayopenimis/healthpay-fe-language_ar_js#f6abbe7a78bb0f63de203b24d8662ef7bd237c1c"
     }
   ]
 }
