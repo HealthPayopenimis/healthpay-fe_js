@@ -5,8 +5,7 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { MuiThemeProvider, LinearProgress } from "@material-ui/core";
 import { Provider } from "react-redux";
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import LocalizedPickersProvider from "./LocalizedPickersProvider";
 import * as serviceWorker from "./serviceWorker";
 import createAppTheme from "./helpers/theme";
 import store from "./helpers/store";
@@ -107,7 +106,7 @@ const AppContainer = () => {
     return (
       <MuiThemeProvider theme={dynamicTheme}>
         <Provider store={store(reducers, middlewares)}>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
+          <LocalizedPickersProvider>
             <ModulesManagerProvider modulesManager={modulesManager}>
               <App
                 basename={process.env.PUBLIC_URL}
@@ -117,7 +116,7 @@ const AppContainer = () => {
                 disableTextLogo={disableTextLogo}
               />
             </ModulesManagerProvider>
-          </MuiPickersUtilsProvider>
+          </LocalizedPickersProvider>
         </Provider>
       </MuiThemeProvider>
     );
