@@ -64,7 +64,7 @@
     },
     {
       "name": "ContributionModule",
-      "npm": "@openimis/fe-contribution@github:HealthPayopenimis/healthpay-fe-contribution_js#7e9f63c8b63690eb7ed3fd24d4858b911186f0ed"
+      "npm": "@openimis/fe-contribution@github:HealthPayopenimis/healthpay-fe-contribution_js#b85e3faefe8629aa987f8126440b1aafb382ed35"
     },
     {
       "name": "PaymentModule",
