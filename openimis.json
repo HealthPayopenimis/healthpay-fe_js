@@ -124,7 +124,7 @@
     },
     {
       "name": "LanguageArModule",
-      "npm": "@healthpay/fe-language_ar@github:HealthPayopenimis/healthpay-fe-language_ar_js#75d791007cba260db0ee9c93f0e695c121dd959e"
+      "npm": "@healthpay/fe-language_ar@github:HealthPayopenimis/healthpay-fe-language_ar_js#9b3db8197ef126372a4dba8fbe588fdec16f98ba"
     }
   ]
 }
