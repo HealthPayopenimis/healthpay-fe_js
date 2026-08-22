@@ -28,7 +28,7 @@
   "modules": [
     {
       "name": "CoreModule",
-      "npm": "@openimis/fe-core@github:HealthPayopenimis/healthpay-fe-core_js#a76565d7e62cb8eb68b5bb5f0175bf05ff974a28"
+      "npm": "@openimis/fe-core@github:HealthPayopenimis/healthpay-fe-core_js#ba9e6c5a0d31b25e73b123f393ea83411e0b0996"
     },
     {
       "name": "HomeModule",
