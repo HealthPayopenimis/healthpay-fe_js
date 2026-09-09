@@ -29,4 +29,6 @@ moment.defineLocale("ar-eg", {
 // default so importing this module does not silently change app-wide formatting.
 moment.locale("en");
 
-export default "ar-eg";
+const ARABIC_EGYPT_LOCALE = "ar-eg";
+
+export default ARABIC_EGYPT_LOCALE;
