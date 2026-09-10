@@ -36,7 +36,7 @@
     },
     {
       "name": "LocationModule",
-      "npm": "@openimis/fe-location@github:HealthPayopenimis/healthpay-fe-location_js#021db2e7f53068be214bc3b3539a3a0c7a477323"
+      "npm": "@openimis/fe-location@github:HealthPayopenimis/healthpay-fe-location_js#524759153dd1f65f6b33a2326ac5828c9e6c5a6e"
     },
     {
       "name": "InsureeModule",
@@ -52,7 +52,7 @@
     },
     {
       "name": "ProductModule",
-      "npm": "@openimis/fe-product@github:HealthPayopenimis/healthpay-fe-product_js#6ed3a323bff25e9a56519475d4e38f9eef9f180a"
+      "npm": "@openimis/fe-product@github:HealthPayopenimis/healthpay-fe-product_js#35dc8421ceb915b49d22bcdc44cb21906d97663c"
     },
     {
       "name": "PolicyModule",
@@ -124,7 +124,7 @@
     },
     {
       "name": "LanguageArModule",
-      "npm": "@healthpay/fe-language_ar@github:HealthPayopenimis/healthpay-fe-language_ar_js#3eee3a48d6a8521b409032ce4b008b3ff3523bd7"
+      "npm": "@healthpay/fe-language_ar@github:HealthPayopenimis/healthpay-fe-language_ar_js#14f58f8a355fdee84ac70fb7f28ca53feb49aabf"
     }
   ]
 }
