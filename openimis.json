@@ -52,7 +52,7 @@
     },
     {
       "name": "ProductModule",
-      "npm": "@openimis/fe-product@github:HealthPayopenimis/healthpay-fe-product_js#35dc8421ceb915b49d22bcdc44cb21906d97663c"
+      "npm": "@openimis/fe-product@github:HealthPayopenimis/healthpay-fe-product_js#e30c3766782b61a40692b6aa87465ea980fe47e3"
     },
     {
       "name": "PolicyModule",
