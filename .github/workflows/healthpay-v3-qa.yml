@@ -1,0 +1,28 @@
+name: HealthPay V3 QA frontend
+
+on:
+  push:
+    branches: ['issue36-37/qa-release']
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Prepare immutable module configuration
+        run: |
+          npm install -g npm@10
+          npm run check-package
+          npm run load-config
+      - name: Install and build assembly
+        run: |
+          npm install --include=dev --legacy-peer-deps
+          npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: healthpay-v3-frontend-${{ github.sha }}
+          path: build/
