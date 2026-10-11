@@ -36,7 +36,7 @@
     },
     {
       "name": "LocationModule",
-      "npm": "@openimis/fe-location@github:HealthPayopenimis/healthpay-fe-location_js#6fdd2ba4bc59e655eb86f344125d28a6e10e064e"
+      "npm": "@openimis/fe-location@github:HealthPayopenimis/healthpay-fe-location_js#b8676be78045673b2e4c9b5357b6aa89f74d8777"
     },
     {
       "name": "InsureeModule",
