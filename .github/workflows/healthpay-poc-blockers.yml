@@ -1,0 +1,38 @@
+name: HealthPay POC blocker candidate
+
+on:
+  push:
+    branches: ['poc/blocker-release-oct27']
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Generate pinned module configuration
+        run: |
+          npm install -g npm@10
+          npm run check-package
+          npm run load-config
+      - name: Install and build complete assembly
+        run: |
+          npm install --include=dev --legacy-peer-deps
+          mkdir -p candidate-provenance
+          node --version > candidate-provenance/tool-versions.txt
+          npm --version >> candidate-provenance/tool-versions.txt
+          cp package-lock.json candidate-provenance/package-lock.json
+          cp openimis.json candidate-provenance/openimis.json
+          sha256sum candidate-provenance/package-lock.json > candidate-provenance/dependency-lock.sha256
+          npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: healthpay-poc-frontend-${{ github.sha }}
+          path: |
+            build/
+            candidate-provenance/
+          if-no-files-found: error
