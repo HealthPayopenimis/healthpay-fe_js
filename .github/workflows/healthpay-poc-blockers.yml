@@ -22,10 +22,10 @@ jobs:
           npm install -g npm@10.9.9
           npm run check-package
           npm run load-config
-          cp script/poc/baseline-package-lock.json package-lock.json
+          node -e 'const fs=require("fs");const p=JSON.parse(fs.readFileSync("package.json"));const b=fs.readFileSync("script/poc/baseline-package-lock.json","utf8");const old=JSON.parse(b).packages[""].dependencies["@openimis/fe-claim"].split("#").pop();const current=p.dependencies["@openimis/fe-claim"].split("#").pop();if(!/^[a-f0-9]{40}$/.test(current))throw Error("EXACT_CLAIM_PIN_REQUIRED");fs.writeFileSync("package-lock.json",b.split(old).join(current));'
       - name: Install and build complete assembly
         run: |
-          npm install --include=dev --legacy-peer-deps
+          npm ci --include=dev --legacy-peer-deps
           python3 script/poc/verify_dependency_delta.py script/poc/baseline-package-lock.json package-lock.json
           mkdir -p candidate-provenance
           node --version > candidate-provenance/tool-versions.txt

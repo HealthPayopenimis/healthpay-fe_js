@@ -26,5 +26,14 @@ def normalize(value):
     if isinstance(value,dict):return {key:normalize(item) for key,item in value.items()}
     if isinstance(value,list):return [normalize(item) for item in value]
     return value
-assert normalize(a)==normalize(b),'UNRELATED_DEPENDENCY_LOCK_DRIFT'
+aa=normalize(a);bb=normalize(b)
+if aa!=bb:
+    differences=[]
+    for key in sorted(set(aa['packages'])|set(bb['packages'])):
+        left=aa['packages'].get(key);right=bb['packages'].get(key)
+        if left!=right:
+            fields=sorted(set(left or {})|set(right or {}))
+            differences.append({'package':key,'before':left,'after':right,'changedFields':[field for field in fields if (left or {}).get(field)!=(right or {}).get(field)]})
+    print('DEPENDENCY_DELTA_DIAGNOSTIC',json.dumps(differences,sort_keys=True))
+assert aa==bb,'UNRELATED_DEPENDENCY_LOCK_DRIFT'
 print('DEPENDENCY_DELTA_PASS: only exact reviewed claim module source changed; all other packages fixed')
