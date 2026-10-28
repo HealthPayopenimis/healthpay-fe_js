@@ -72,7 +72,7 @@
     },
     {
       "name": "ClaimModule",
-      "npm": "@openimis/fe-claim@github:HealthPayopenimis/healthpay-fe-claim_js#59d8afb50b7996aa32f91b4c59c97432e634be33"
+      "npm": "@openimis/fe-claim@github:HealthPayopenimis/healthpay-fe-claim_js#53982873829c701413b39a434b7bc8b004448baf"
     },
     {
       "name": "ClaimBatchModule",
