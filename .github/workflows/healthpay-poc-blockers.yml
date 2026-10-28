@@ -22,7 +22,7 @@ jobs:
           npm install -g npm@10.9.9
           npm run check-package
           npm run load-config
-          node -e 'const fs=require("fs");const p=JSON.parse(fs.readFileSync("package.json"));const b=fs.readFileSync("script/poc/baseline-package-lock.json","utf8");const old=JSON.parse(b).packages[""].dependencies["@openimis/fe-claim"].split("#").pop();const current=p.dependencies["@openimis/fe-claim"].split("#").pop();if(!/^[a-f0-9]{40}$/.test(current))throw Error("EXACT_CLAIM_PIN_REQUIRED");fs.writeFileSync("package-lock.json",b.split(old).join(current));'
+          node -e 'const fs=require("fs");const p=JSON.parse(fs.readFileSync("package.json"));let b=fs.readFileSync("script/poc/baseline-package-lock.json","utf8");const baseline=JSON.parse(b);for(const pkg of ["@openimis/fe-claim","@openimis/fe-location"]){const old=baseline.packages[""].dependencies[pkg].split("#").pop();const current=p.dependencies[pkg].split("#").pop();if(!/^[a-f0-9]{40}$/.test(current))throw Error("EXACT_SOURCE_PIN_REQUIRED");b=b.split(old).join(current);}fs.writeFileSync("package-lock.json",b);'
       - name: Install and build complete assembly
         run: |
           npm ci --include=dev --legacy-peer-deps

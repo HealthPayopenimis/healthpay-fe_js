@@ -1,39 +1,37 @@
 #!/usr/bin/env python3
-"""Compare generated assembly lock with verified prior candidate; no network."""
+"""Allow only exact reviewed claim/location git pins; no dependency/version drift."""
 from pathlib import Path
-import copy, json, sys
-baseline=json.loads(Path(sys.argv[1]).read_text())
-current=json.loads(Path(sys.argv[2]).read_text())
-config=json.loads(Path('openimis.json').read_text())
-def walk(value):
+import copy,json,re,sys
+baseline=json.loads(Path(sys.argv[1]).read_text());current=json.loads(Path(sys.argv[2]).read_text());config=json.loads(Path('openimis.json').read_text())
+ALLOWED={'@openimis/fe-claim':'healthpay-fe-claim_js','@openimis/fe-location':'healthpay-fe-location_js'}
+def pins(value,repo):
     if isinstance(value,dict):
-        for key,item in value.items():
-            if isinstance(item,str) and 'healthpay-fe-claim_js#' in item:
-                yield item.split('#')[-1]
-            yield from walk(item)
+        for item in value.values():
+            if isinstance(item,str) and repo+'#' in item:yield item.split('#')[-1]
+            yield from pins(item,repo)
     elif isinstance(value,list):
-        for item in value:yield from walk(item)
-sha=list(walk(config))
-assert len(set(sha))==1 and len(sha[0])==40,'EXACT_CLAIM_PIN_REQUIRED'
-sha=sha[0]
-a=copy.deepcopy(baseline);b=copy.deepcopy(current)
-old=a['packages']['']['dependencies']['@openimis/fe-claim'].split('#')[-1]
-assert b['packages']['']['dependencies']['@openimis/fe-claim'].split('#')[-1]==sha
-assert b['packages']['node_modules/@openimis/fe-claim']['resolved'].split('#')[-1]==sha
-# Normalize only claim commit references. Every other field/package remains fixed.
+        for item in value:yield from pins(item,repo)
+replacements={}
+for package,repo in ALLOWED.items():
+    matches=set(pins(config,repo));assert len(matches)==1,'SINGLE_EXACT_PIN_REQUIRED:'+package
+    sha=matches.pop();assert re.fullmatch('[a-f0-9]{40}',sha),'EXACT_SHA_REQUIRED:'+package
+    old=baseline['packages']['']['dependencies'][package].split('#')[-1]
+    assert current['packages']['']['dependencies'][package].split('#')[-1]==sha,'ROOT_PIN_MISMATCH:'+package
+    assert current['packages']['node_modules/'+package]['resolved'].split('#')[-1]==sha,'INSTALLED_PIN_MISMATCH:'+package
+    replacements[old]='<'+package+'_SOURCE>';replacements[sha]=replacements[old]
 def normalize(value):
-    if isinstance(value,str):return value.replace(old,'<CLAIM_SOURCE>').replace(sha,'<CLAIM_SOURCE>')
-    if isinstance(value,dict):return {key:normalize(item) for key,item in value.items()}
-    if isinstance(value,list):return [normalize(item) for item in value]
+    if isinstance(value,str):
+        for sha,marker in replacements.items():value=value.replace(sha,marker)
+        return value
+    if isinstance(value,dict):return {k:normalize(v) for k,v in value.items()}
+    if isinstance(value,list):return [normalize(v) for v in value]
     return value
-aa=normalize(a);bb=normalize(b)
-if aa!=bb:
+a=normalize(baseline);b=normalize(current)
+if a!=b:
     differences=[]
-    for key in sorted(set(aa['packages'])|set(bb['packages'])):
-        left=aa['packages'].get(key);right=bb['packages'].get(key)
-        if left!=right:
-            fields=sorted(set(left or {})|set(right or {}))
-            differences.append({'package':key,'before':left,'after':right,'changedFields':[field for field in fields if (left or {}).get(field)!=(right or {}).get(field)]})
+    for key in sorted(set(a['packages'])|set(b['packages'])):
+        left=a['packages'].get(key);right=b['packages'].get(key)
+        if left!=right:differences.append({'package':key,'changedFields':[field for field in sorted(set(left or {})|set(right or {})) if (left or {}).get(field)!=(right or {}).get(field)]})
     print('DEPENDENCY_DELTA_DIAGNOSTIC',json.dumps(differences,sort_keys=True))
-assert aa==bb,'UNRELATED_DEPENDENCY_LOCK_DRIFT'
-print('DEPENDENCY_DELTA_PASS: only exact reviewed claim module source changed; all other packages fixed')
+assert a==b,'UNRELATED_DEPENDENCY_LOCK_DRIFT'
+print('DEPENDENCY_DELTA_PASS: only exact reviewed claim/location source pins may differ; every package version and other field remains fixed')
