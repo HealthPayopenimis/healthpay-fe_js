@@ -2,7 +2,7 @@ name: HealthPay claim-context candidate
 
 on:
   push:
-    branches: ['poc/claim-context-release-oct28']
+    branches: ['poc/claim-context-release-oct28', 'poc/issue40-release-oct29']
   workflow_dispatch:
 
 jobs:
